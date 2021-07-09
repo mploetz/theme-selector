@@ -1,61 +1,36 @@
-import React, { Fragment } from "react";
-import { styled, themes, convert } from "@storybook/theming";
-import { TabsState, Placeholder, Button } from "@storybook/components";
-import { List } from "./List";
-
-export const RequestDataButton = styled(Button)({
-  marginTop: "1rem",
-});
+import React, { useState } from "react";
+import { DropDown, DropDownSelectableItem, DropDownSelectableList } from "@ferris/react/components/drop-downs";
 
 /**
  * Checkout https://github.com/storybookjs/storybook/blob/next/addons/jest/src/components/Panel.tsx
  * for a real world example
  */
-export const PanelContent = ({ results, fetchData, clearData }) => (
-  <TabsState
-    initial="overview"
-    backgroundColor={convert(themes.normal).background.hoverable}
-  >
-    <div
-      id="overview"
-      title="Overview"
-      color={convert(themes.normal).color.positive}
-    >
-      <Placeholder>
-        <Fragment>
-          Addons can gather details about how a story is rendered. This is panel
-          uses a tab pattern. Click the button below to fetch data for the other
-          two tabs.
-        </Fragment>
-        <Fragment>
-          <RequestDataButton
-            secondary
-            small
-            onClick={fetchData}
-            style={{ marginRight: 16 }}
-          >
-            Request data
-          </RequestDataButton>
-
-          <RequestDataButton outline small onClick={clearData}>
-            Clear data
-          </RequestDataButton>
-        </Fragment>
-      </Placeholder>
+export const PanelContent = (props) => {
+  const { toggleCallback } = props;
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <DropDown
+        buttonValue="Sort"
+        iconName="sort"
+        open={ open }
+        onRequestToggle={ () => toggleCallback }
+        // onRequestClose={(): void => this.handleRequestClose()}
+        // onCancel={(): void => this.handleCloseCancel()}
+        collapsePadding={true}
+      >
+        <DropDownSelectableList
+          onSelect={ () => setOpen(false) }
+          closeOnSelect
+        >
+          <DropDownSelectableItem value="0" id={0}>
+            Distance
+          </DropDownSelectableItem>
+          <DropDownSelectableItem value="1" id={1}>
+            Match
+          </DropDownSelectableItem>
+        </DropDownSelectableList>
+      </DropDown>
     </div>
-    <div
-      id="danger"
-      title={`${results.danger.length} Danger`}
-      color={convert(themes.normal).color.negative}
-    >
-      <List items={results.danger} />
-    </div>
-    <div
-      id="warning"
-      title={`${results.warning.length} Warning`}
-      color={convert(themes.normal).color.warning}
-    >
-      <List items={results.warning} />
-    </div>
-  </TabsState>
-);
+  );
+};

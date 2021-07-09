@@ -1,17 +1,17 @@
 {
-  "name": "storybook-addon-kit",
-  "version": "0.0.0",
-  "description": "everything you need to build a Storybook addon",
+  "name": "css-stylesheet-switcher",
+  "version": "1.0.0",
+  "description": "Switch between different style sheets",
   "keywords": [
     "storybook-addons",
     "style",
-    "test"
+    "css"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/storybookjs/storybook-addon-kit"
   },
-  "author": "winkerVSbecks",
+  "author": "Matthew Ploetz",
   "license": "MIT",
   "main": "dist/preset",
   "files": [
@@ -25,7 +25,7 @@
     "buildTsc": "tsc --declaration --emitDeclarationOnly --outDir ./dist",
     "build": "concurrently \"npm run buildBabel\" \"npm run buildTsc\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./node_modules/@ferris/core",
     "start": "concurrently \"npm run storybook -- --no-manager-cache --quiet\" \"npm run build -- --watch\"",
     "build-storybook": "build-storybook",
     "prerelease": "node check-metadata.js",
@@ -68,12 +68,13 @@
     "access": "public"
   },
   "storybook": {
-    "displayName": "Addon Kit",
+    "displayName": "Theme Selector",
     "supportedFrameworks": [
-      "react",
-      "vue",
-      "angular"
+      "react"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
+  },
+  "dependencies": {
+    "@ferris/react": "^1.7.1"
   }
 }
